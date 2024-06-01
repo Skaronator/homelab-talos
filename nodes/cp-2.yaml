@@ -1,7 +1,7 @@
 - op: add
   path: /machine/network/interfaces/0/addresses
   value:
-    - 192.168.0.43/23
+    - 192.168.0.42/23
 - op: add
   path: /machine/network/hostname
-  value: talos-cp3
+  value: talos-cp-2
