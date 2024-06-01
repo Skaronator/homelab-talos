@@ -1,0 +1,26 @@
+version: '3'
+
+tasks:
+  deploy-node:
+    internal: true
+    cmds:
+      - >
+        talosctl gen config homelab https://192.168.0.40:6443
+        --force
+        --with-secrets secrets.yaml
+        --config-patch @patches/all.yaml
+        --config-patch-control-plane @patches/cp.yaml
+        --config-patch-worker @patches/worker.yaml
+      - talosctl machineconfig patch {{.TYPE}}.yaml --patch @nodes/{{.NODE}}.yaml -o out/final-{{.NODE}}.yaml
+  generate:
+    cmds:
+      - for: [cp1, cp2, cp3]
+        task: deploy-node
+        vars:
+          TYPE: controlplane
+          NODE: "{{.ITEM}}"
+      - for: [w1, w2, w3]
+        task: deploy-node
+        vars:
+          TYPE: worker
+          NODE: "{{.ITEM}}"
