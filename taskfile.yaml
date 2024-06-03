@@ -12,7 +12,7 @@ tasks:
         --config-patch-control-plane @patches/cp.yaml
         --config-patch-worker @patches/worker.yaml
         --output-dir out
-      - talosctl machineconfig patch {{.TYPE}}.yaml --patch @nodes/{{.NODE}}.yaml -o out/final-{{.NODE}}.yaml
+      - talosctl machineconfig patch out/{{.TYPE}}.yaml --patch @nodes/{{.NODE}}.yaml -o out/final-{{.NODE}}.yaml
   generate:
     cmds:
       - for: [cp-1, cp-2, cp-3]
